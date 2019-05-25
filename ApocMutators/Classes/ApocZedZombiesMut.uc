@@ -9,12 +9,16 @@ struct SReplZEDs {
 };
 var config array<SReplZEDs> ReplZEDs;
 
+var int CurrWaveNum;
+
 function PostBeginPlay()
 {
 	Super.PostBeginPlay();
 
 	RagdollLifeSpanPatch();
-	SetTimer(0.1, false);
+
+	CurrWaveNum = -1;
+	SetTimer(1.0, true);
 }
 
 function RagdollLifeSpanPatch()
@@ -45,6 +49,15 @@ function Timer()
 
 	if ((KF != None) && (KF.WaveNum >= 0))
 	{
+		// check next wave
+		if (KF.WaveNum == CurrWaveNum)
+			return;
+		CurrWaveNum = KF.WaveNum;
+
+		// check end game
+		if (KF.WaveNum > KF.FinalWave)
+			Destroy();
+
 		//normal squads
 		for (squad=0; squad < KF.InitSquads.Length; squad++)
 		{
@@ -88,17 +101,28 @@ function Timer()
 
 defaultproperties
 {
-    bAddToServerPackages=True
+	bAddToServerPackages=True
 	GroupName="KF-ApocZedZombiesMut"
 	FriendlyName="[Apoc] ZED Zombies"
 	Description="Different variations of zombies appear during the game."
 	bAlwaysRelevant=True
 	RemoteRole=ROLE_SimulatedProxy
-	ReplZEDs(0)=(StartWave=2,EndWave=7,Chance=0.150000,From="ApocZEDPack.ZEDS_ZombieBloat",To="ApocZEDPack.Shafter_ZombieShafter")
-	ReplZEDs(1)=(StartWave=2,EndWave=7,Chance=0.100000,From="ApocZEDPack.ZEDS_ZombieFleshPound",To="ApocZEDPack.Brute_ZombieBrute")
-	ReplZEDs(2)=(StartWave=2,EndWave=7,Chance=0.150000,From="ApocZEDPack.ZEDS_ZombieGorefast",To="ApocZEDPack.GoreShank_ZombieGoreShank")
-	ReplZEDs(3)=(StartWave=2,EndWave=7,Chance=0.150000,From="ApocZEDPack.ZEDS_ZombieHusk",To="ApocZEDPack.HellFire_ZombieHellFire")
-	ReplZEDs(4)=(StartWave=2,EndWave=7,Chance=0.150000,From="ApocZEDPack.ZEDS_ZombieScrake",To="ApocZEDPack.Jason_ZombieJason")
-	ReplZEDs(5)=(StartWave=2,EndWave=7,Chance=0.050000,From="ApocZEDPack.ZEDS_ZombieSiren",To="ApocZEDPack.Dread_Dread")
-	ReplZEDs(6)=(StartWave=2,EndWave=7,Chance=0.150000,From="ApocZEDPack.ZEDS_ZombieStalker",To="ApocZEDPack.Shiver_ZombieShiver")
+	ReplZEDs(0)=(StartWave=1,EndWave=7,Chance=0.100000,From="ApocZEDPack.ZEDS_ZombieClot",To="ApocZEDPack.ZEDS_ZombieScrake")
+	ReplZEDs(1)=(StartWave=2,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieClot",To="ApocMutators.WTFZombiesMetalClot")
+	ReplZEDs(2)=(StartWave=2,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieCrawler",To="ApocMutators.WTFZombiesBroodmother")
+	ReplZEDs(3)=(StartWave=2,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieCrawler",To="ApocMutators.WTFZombiesLeaper")
+	ReplZEDs(4)=(StartWave=2,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieClot",To="ApocZEDPack.GoreShank_ZombieGoreShank")
+	ReplZEDs(5)=(StartWave=2,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieGorefast",To="ApocZEDPack.ZEDS_ZombieScrake")
+	ReplZEDs(6)=(StartWave=3,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieGorefast",To="ApocMutators.WTFZombiesGoreallyfast")
+	ReplZEDs(7)=(StartWave=3,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieBloat",To="ApocMutators.WTFZombiesBloatzilla")
+	ReplZEDs(8)=(StartWave=3,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieHusk",To="ApocMutators.WTFZombiesIncinerator")
+	ReplZEDs(9)=(StartWave=3,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieScrake",To="ApocZEDPack.ZEDS_ZombieFleshPound")
+	ReplZEDs(10)=(StartWave=4,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieScrake",To="ApocMutators.WTFZombiesMauler")
+	ReplZEDs(11)=(StartWave=4,EndWave=7,Chance=1.300000,From="ApocZEDPack.ZEDS_ZombieFleshPound",To="ApocMutators.WTFZombiesMeatPounder")
+	ReplZEDs(12)=(StartWave=4,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieBloat",To="ApocZEDPack.Shafter_ZombieShafter")
+	ReplZEDs(13)=(StartWave=5,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieStalker",To="ApocZEDPack.Shiver_ZombieShiver")
+	ReplZEDs(14)=(StartWave=5,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieHusk",To="ApocZEDPack.HellFire_ZombieHellFire")
+	ReplZEDs(15)=(StartWave=5,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieScrake",To="ApocZEDPack.Jason_ZombieJason")
+	ReplZEDs(16)=(StartWave=5,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieFleshPound",To="ApocZEDPack.Brute_ZombieBrute")
+	ReplZEDs(17)=(StartWave=5,EndWave=7,Chance=0.300000,From="ApocZEDPack.ZEDS_ZombieFleshPound",To="ApocZEDPack.MutantZombieFleshpound")
 }
