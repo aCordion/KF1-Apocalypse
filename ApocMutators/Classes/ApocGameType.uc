@@ -42,6 +42,7 @@ var globalconfig string ApocVotingHandlerType;
 var() config WaveInfo ApocWaves[16];
 var() globalconfig array<string> ApocMonsterSquad;
 var() globalconfig array<MClassTypes> ApocMonsterClasses;
+var() globalconfig string ApocEndGameBossClass;
 
 // Stub
 static function Texture GetRandomTeamSymbol(int base) { return None; }
@@ -2837,6 +2838,7 @@ State MatchInProgress
 		}
 		else
 		{
+			EndGameBossClass = ApocEndGameBossClass;
 			NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(EndGameBossClass,Class'Class'));
 			NextspawnSquad[0].static.PreCacheAssets(Level);
 		}
@@ -3878,6 +3880,7 @@ function bool AddBoss()
 	}
 	else
 	{
+		EndGameBossClass = ApocEndGameBossClass;
 		NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(EndGameBossClass,Class'Class'));
 	}
 
@@ -5489,4 +5492,5 @@ defaultproperties
 	ApocGameLength=3
 	ApocInitialWave=1
 	ApocFinalWave=9
+	ApocEndGameBossClass="KFChar.ZombieBoss_STANDARD"
 }
