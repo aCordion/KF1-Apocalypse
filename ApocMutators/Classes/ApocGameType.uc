@@ -5488,5 +5488,5 @@ defaultproperties
 	ApocVotingHandlerType="ApocMutators.MapVote_KFVotingHandler"
 	ApocGameLength=3
 	ApocInitialWave=1
-	ApocFinalWave=8
+	ApocFinalWave=9
 }
