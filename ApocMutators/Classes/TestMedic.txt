@@ -1,0 +1,52 @@
+class TestMedic extends SRVetFieldMedic
+	abstract;
+
+static function AddCustomStats( ClientPerkRepLink Other )
+{
+	Other.AddCustomValue(Class'TestHeal');
+}
+
+static function int GetPerkProgressInt( ClientPerkRepLink StatOther, out int FinalInt, byte CurLevel, byte ReqNum )
+{
+	switch( CurLevel )
+	{
+	case 0:
+		FinalInt = 1;
+		break;
+	case 1:
+		FinalInt = 2;
+		break;
+	case 2:
+		FinalInt = 5;
+		break;
+	case 3:
+		FinalInt = 10;
+		break;
+	case 4:
+		FinalInt = 15;
+		break;
+	case 5:
+		FinalInt = 25;
+		break;
+	case 6:
+		FinalInt = 50;
+		break;
+	default:
+		FinalInt = 50+GetDoubleScaling(CurLevel,35);
+	}
+	return Min(StatOther.GetCustomValueInt(Class'TestHeal'),FinalInt);
+}
+
+static function AddDefaultInventory(KFPlayerReplicationInfo KFPRI, Pawn P)
+{
+	// If Level 5 or Higher, give them Body Armor
+	if ( KFPRI.ClientVeteranSkillLevel >= 5 )
+		P.ShieldStrength = 100;
+	KFHumanPawn(P).CreateInventoryVeterancy("KFMod.MP7MMedicGun", GetCostScaling(KFPRI, class'MP7MPickup'));
+}
+
+defaultproperties
+{
+	VeterancyName="Field Medic Experiment"
+	Requirements(0)="Kill %x specimen with medic gun"
+}

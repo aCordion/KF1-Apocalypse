@@ -1,0 +1,12 @@
+class TestHeal extends SRCustomProgressInt;
+
+function NotifyPlayerKill( Pawn Killed, class<DamageType> damageType )
+{
+	if( Monster(Killed)!=None && damageType==Class'DamTypeMP7M' )
+		IncrementProgress(1);
+}
+
+defaultproperties
+{
+	ProgressName="Medic gun kills"
+}
