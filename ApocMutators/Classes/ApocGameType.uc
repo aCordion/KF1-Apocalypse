@@ -53,7 +53,7 @@ function ApocInitApocVariables()
 	if( ApocGameLength == GL_Custom )
 	{
 		InitialWave = ApocInitialWave-1;
-		FinalWave = ApocFinalWave;
+		FinalWave = ApocFinalWave-1;
 		MaxPlayers = ApocMaxPlayers;
 		MaxSpectators = ApocMaxSpectators;
 		StartingCash = ApocStartingCash;
